@@ -12,6 +12,7 @@ creds = None
 # The file token.pickle stores the user's access and refresh tokens, and is
 # created automatically when the authorization flow completes for the first
 # time.
+
 if os.path.exists('token.pickle'):
     with open('credentials/token.pickle', 'rb') as token:
         creds = pickle.load(token)
@@ -68,6 +69,6 @@ photos.creationTime = pd.to_datetime(photos.creationTime)
 
 #photos.to_hdf('google_photo_data.hdf', key='photos')
 
-#print(photos.mimeType.value_counts())
-#print(photos.loc[0]["productUrl"])
+print(photos.mimeType.value_counts())
+print(photos.loc[0]["productUrl"])
 
