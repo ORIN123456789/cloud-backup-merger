@@ -1,9 +1,10 @@
 import pickle
+import urllib.request
 import os.path
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
-
+from PIL import Image
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/photoslibrary.readonly']
 
@@ -12,21 +13,24 @@ creds = None
 # created automatically when the authorization flow completes for the first
 # time.
 if os.path.exists('token.pickle'):
-    with open('token.pickle', 'rb') as token:
+    with open('credentials/token.pickle', 'rb') as token:
         creds = pickle.load(token)
+        print(type(creds))
 # If there are no (valid) credentials available, let the user log in.
 if not creds or not creds.valid:
     if creds and creds.expired and creds.refresh_token:
         creds.refresh(Request())
     else:
         flow = InstalledAppFlow.from_client_secrets_file(
-            'credentials.json', SCOPES)
+            'credentials/credentials.json', SCOPES)
         creds = flow.run_local_server(port=0)
     # Save the credentials for the next run
     with open('token.pickle', 'wb') as token:
         pickle.dump(creds, token)
 
+
 google_photos = build('photoslibrary', 'v1', credentials=creds, static_discovery=False)
+
 
 items = []
 nextpagetoken = None
@@ -37,7 +41,7 @@ while nextpagetoken != '':
     items += results.get('mediaItems', [])
     nextpagetoken = results.get('nextPageToken', '')
 
-
+print(type(items[0]))
 import pandas as pd
 
 # Convert the list of dict into a dataframe.
@@ -59,10 +63,11 @@ photos = pd.concat(
 photos.creationTime = pd.to_datetime(photos.creationTime)
 
 # Convert other numeric data into numeric dtypes
-for c in ['width', 'height', 'apertureFNumber', 'focalLength', 'isoEquivalent']:
-    photos[c] = pd.to_numeric(photos[c])
+#for c in ['width', 'height']:
+#    photos[c] = pd.to_numeric(photos[c])
 
 #photos.to_hdf('google_photo_data.hdf', key='photos')
-print(photos.mimeType.value_counts())
-print(photos.loc[0]["productUrl"])
-print(photos.loc[0])
+
+#print(photos.mimeType.value_counts())
+#print(photos.loc[0]["productUrl"])
+
