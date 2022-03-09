@@ -23,15 +23,15 @@ class GooglePhotosClient:
 
             for image in album_images:
                 try:
-                    album_image = AlbumImage(image)
+                    album_image = AlbumImage(google_photo=image, album_title=album_title)
                     hash = album_image.hash
                     if hash in all_the_images:
                         if hash not in duplicates:
                             duplicates[hash] = set()
-                        duplicates[hash].add((album_image.url))
+                        duplicates[hash].add(album_image)
                         duplicates[hash].add((all_the_images[hash]))
                     else:
-                        all_the_images[album_image.hash] = album_image.url
+                        all_the_images[album_image.hash] = album_image
                 except ValueError:
                     pass
         return duplicates

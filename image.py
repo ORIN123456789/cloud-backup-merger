@@ -6,10 +6,11 @@ from io import BytesIO
 
 class AlbumImage:
 
-    def __init__(self, google_photo, use_url_only=True):
+    def __init__(self, google_photo, album_title=None, enrich_image_info=False):
         self._validate(google_photo)
         self.url = google_photo["baseUrl"]
-        if not use_url_only:
+        self.album_title = album_title
+        if enrich_image_info:
             self.id_ = google_photo["id"]
             self.filename = google_photo["filename"]
             self.metadata = google_photo["mediaMetadata"]
@@ -41,5 +42,5 @@ class AlbumImage:
         self._hash = str(imagehash.average_hash(image))
 
     def __str__(self):
-        return f"Image: \n   -URL: {self.url}   \n   -hash: {self.hash}"
+        return f"Image: \n   -Album: {self.album_title}\n   -URL: {self.url}   \n   -Hash: {self.hash}"
 
