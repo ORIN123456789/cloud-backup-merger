@@ -9,6 +9,7 @@ class AlbumImage:
     def __init__(self, google_photo, album_title=None, enrich_image_info=False):
         self._validate(google_photo)
         self.url = google_photo["productUrl"]
+        self.base_url = google_photo["baseUrl"]
         self.hash = google_photo["baseUrl"]
         self.album_title = album_title
         if enrich_image_info:

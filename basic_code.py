@@ -70,5 +70,5 @@ photos.creationTime = pd.to_datetime(photos.creationTime)
 #photos.to_hdf('google_photo_data.hdf', key='photos')
 
 print(photos.mimeType.value_counts())
-print(photos.loc[0]["productUrl"])
+print(photos.loc[0]["baseUrl"])
 
