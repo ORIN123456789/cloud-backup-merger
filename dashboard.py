@@ -20,18 +20,20 @@ def photo_li(img_set):
     for img in img_set:
         base_url = img.base_url
         break
-    link_li = lambda img: html.Li(html.A("Albume: " + img.album_title, href=img.url, target="_blank"))
-    links = html.Ul(children=[link_li(img) for img in img_set])
-    li = html.Li(html.Div(children=[html.P("photo-1"),
+    link_li = lambda img: html.Li(html.A("Albume: " + img.album_title, href=img.url, target="_blank"),
+                                  style={'text-align': 'left'})
+    links = html.Ul(children=[link_li(img) for img in img_set], style={'list-style-type' : 'none'})
+    li = html.Li(children=[html.P("photo-1"),
                       html.Img(src=base_url, style={'width': '90px', 'height': '100px'}),
-                           links
-                           ]))
+                           links],
+                          style={'float': 'left', 'width': '180px', 'text-align': 'center',
+                                 'border': 'solid 1px'})
     return li
 
 def create_list_of_photos(duplicates):
     photo_list = html.Ul(
         id='my-list', children=[photo_li(img_set) for img_set in duplicates],
-        style={'display': 'inline', 'float' : 'left'}
+        style={'list-style-type' : 'none'}
     )
     return photo_list
 
@@ -69,7 +71,7 @@ class Dashboard:
             html.Div([photo_list
                 # html.Img(src='https://raw.githubusercontent.com/michaelbabyn/plot_data/master/bridge.jpg'),
                 #       html.Img(src='https://raw.githubusercontent.com/michaelbabyn/plot_data/master/bridge.jpg')
-                      ])
+                      ], style={'display': 'table'})
         ])
         return html_code
 
