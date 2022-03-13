@@ -1,9 +1,9 @@
 SCOPES = ['https://www.googleapis.com/auth/photoslibrary.readonly']
 
-TOKEN_PATH = 'credentials/token.pickle'
-
 CREDENTIALS_PATH = 'credentials/credentials.json'
 
 IS_DASHBOARD = True
 
-DASHBOARD = {"appName": "Cloud Backup Merger"}
+DASHBOARD = {"app_name": "photos",
+             "app_port": 8050,
+             "logo": "assets/logo.png"}

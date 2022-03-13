@@ -1,96 +1,79 @@
-import random
-
 from dash import Dash, html, dcc
 import plotly.express as px
 import pandas as pd
+import webbrowser
+from threading import Timer
+
 from google_photos_client import GooglePhotosClient
 import configurations
 from configurations import DASHBOARD
 
 
-def save_duplicates(duplicates):
-    res = []
-    for hash in duplicates:
-        image = duplicates[hash].pop()
-        res.append(image)
-    return res
-
-def photo_li(img_set):
-    base_url = None
-    for img in img_set:
-        base_url = img.base_url
-        break
-    link_li = lambda img: html.Li(html.A("Albume: " + img.album_title, href=img.url, target="_blank"),
-                                  style={'text-align': 'left'})
-    links = html.Ul(children=[link_li(img) for img in img_set], style={'list-style-type' : 'none'})
-    li = html.Li(children=[html.P("photo-1"),
-                      html.Img(src=base_url, style={'width': '90px', 'height': '100px'}),
-                           links],
-                          style={'float': 'left', 'width': '180px', 'text-align': 'center',
-                                 'border': 'solid 1px'})
-    return li
-
-def create_list_of_photos(duplicates):
-    photo_list = html.Ul(
-        id='my-list', children=[photo_li(img_set) for img_set in duplicates],
-        style={'list-style-type' : 'none'}
-    )
-    return photo_list
-
-
 class Dashboard:
     def __init__(self):
-        self.app = Dash(DASHBOARD["appName"])
-        self.dataframe = self._dataframe()
-        self.figure = self._figure()
-        self.app.layout = self._html()
-        self.photos = []
+        self.duplicated_photos = self._find_duplicated_photos()
+        self.app = Dash(DASHBOARD["app_name"])
+        self.port = DASHBOARD["app_port"]
+        self.app.title = DASHBOARD["app_name"]
+        self.app.layout = self.serve_layout
 
-        self.app.run_server(debug=True)
+    def launch(self):
+        Timer(1, self._open_browser).start()
+        self.app.run_server(port=self.port, use_reloader=False)
 
-    def _html(self):
-        photo_li = lambda img: html.Li(children = [html.P("photo-1"),
-            html.Img(src=img.base_url, style={'width': '90px', 'height': '100px'})])
-        photo_list = create_list_of_photos(self.photos)
-            # html.Ul(
-            # id = 'my-list', children = [photo_li(img) for img in self.photos],
-            # style={'display': 'inline-block'})
+    def refresh_data(self):
+        self.duplicated_photos = self._find_duplicated_photos()
 
-        # for p in self.photos:
-        #     photo_list += [html.Li([
-        #         'photo1',
-        #         html.Img(src='https://raw.githubusercontent.com/michaelbabyn/plot_data/master/bridge.jpg',
-        #                  style={'width': '500px', 'height': '600px'})
-        #     ])]
-        html_code = html.Div(children=[
-            html.H1(children='Cloud Backup Merger'),
-            dcc.Graph(
-                id='occurrences-graph',
-                figure=self.figure
-            ),
-            html.Div([photo_list
-                # html.Img(src='https://raw.githubusercontent.com/michaelbabyn/plot_data/master/bridge.jpg'),
-                #       html.Img(src='https://raw.githubusercontent.com/michaelbabyn/plot_data/master/bridge.jpg')
-                      ], style={'display': 'table'})
-        ])
-        return html_code
+    def _open_browser(self):
+        webbrowser.open_new(f"http://localhost:{self.port}")
+
+    def _find_duplicated_photos(self):
+        google_photos_client = GooglePhotosClient(configurations=configurations)
+        return google_photos_client.duplicates()
+
+    def serve_layout(self):
+        self.refresh_data()
+        if len(self.duplicated_photos) == 0:
+            _html = html.Div(children=[html.Img(src=DASHBOARD["logo"], id='logo'),
+                             html.H3('There are no duplicated photos in you account', className='text')])
+        else:
+            photo_list = self.images_list_to_html_object(self.duplicated_photos.values())
+            _html = html.Div(children=[html.Img(src=DASHBOARD["logo"], id='logo'),
+                                       dcc.Graph(id='occurrences-graph',
+                                                 figure=self._figure()),
+                                       html.H4('The following images appear multiple times in your albums:',
+                                               className='text'),
+                                       html.Div([photo_list], className='table'),
+                                       ]
+                             )
+        return _html
 
     def _figure(self):
-        return px.bar(self.dataframe, x="Photo", y="Occurrences")
+        return px.bar(self._dataframe(), x="Photo", y="Occurrences")
 
     def _dataframe(self):
-        google_photos_client = GooglePhotosClient(configurations=configurations)
-        duplicates = google_photos_client.duplicates()
-        self.photos = duplicates.values() #save_duplicates(duplicates)
-        photos = duplicates.keys()
-        occurences = [len(duplicates[photo]) for photo in photos]
-
-        df = pd.DataFrame({
-            "Photo": photos,
-            "Occurrences": occurences
-        })
+        photos_hash = self.duplicated_photos.keys()
+        occurrences = [len(self.duplicated_photos[photo_hash]) for photo_hash in photos_hash]
+        df = pd.DataFrame({"Photo": photos_hash,
+                           "Occurrences": occurrences})
         return df
 
+    def photo_li(self, album_images):
+        base_url = next(iter(album_images)).base_url
+        link_li = lambda img: html.Li(html.A("Album " + img.album_title,
+                                             className='album',
+                                             href=img.url,
+                                             target="_blank"),
+                                      className='list')
+        links = html.Ul(children=[link_li(img) for img in album_images])
 
+        li = html.Li(children=[html.Img(src=base_url,
+                                        className='image'),
+                               links],
+                     className='photo_li')
+        return li
 
-
+    def images_list_to_html_object(self, photos):
+        photo_list = html.Ul(className='duplicated_photos',
+                             children=[self.photo_li(image) for image in photos])
+        return photo_list

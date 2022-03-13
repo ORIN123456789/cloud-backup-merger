@@ -2,15 +2,17 @@ from gphotospy.media import Media
 from gphotospy.album import Album
 from gphotospy import authorize
 from image import AlbumImage
+from exceptions import InternetException
 
 
 class GooglePhotosClient:
-
     def __init__(self, configurations):
-        self.configurations = configurations
-        self.google_photos_service = authorize.init(self.configurations.CREDENTIALS_PATH)
-        self.media_manager = Media(self.google_photos_service)
-        self.albums = Album(self.google_photos_service).list()
+            self.configurations = configurations
+            self.google_photos_service = authorize.init(self.configurations.CREDENTIALS_PATH)
+            if self.google_photos_service is None:
+                raise InternetException
+            self.media_manager = Media(self.google_photos_service)
+            self.albums = Album(self.google_photos_service).list()
 
     def duplicates(self):
         all_the_images = dict()

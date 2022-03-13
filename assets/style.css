@@ -1,0 +1,56 @@
+.text {
+  text-align: center;
+  font: Arial;
+}
+
+#logo {
+    text-align: center;
+    max-width: 300px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+a:visited{
+  color:black;
+}
+
+
+.photo_li {
+    float: left;
+    width: 180px;
+    text-align: center;
+    border-style: hidden;
+}
+
+.image {
+    max-width: 90px;
+    display: block;
+    margin: auto;
+    text-align: center;
+}
+
+.list {
+    text-align: center;
+    list-style-type:none;}
+}
+
+.table{
+    display: table;
+    list-style-type:none;
+}
+
+.album{
+    list-style-type:none;
+    text-decoration: none;
+    background-color: rgb(253, 243, 185);
+    color: black;
+     font: Arial;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.duplicated_photos{
+    list-style-type:none;
+}
