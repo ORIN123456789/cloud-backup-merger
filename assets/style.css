@@ -52,6 +52,17 @@ a:visited{
     margin-right: auto;
 }
 
+.account{
+    list-style-type:none;
+    text-decoration: none;
+    background-color: rgb(253, 243, 185);
+    color: black;
+     font: Arial;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .duplicated_photos{
     list-style-type:none;
 }

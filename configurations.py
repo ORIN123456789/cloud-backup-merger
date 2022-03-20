@@ -1,10 +1,14 @@
+from common_objects import Account, RunTypeEnum
+
+
+RUN_TYPE = RunTypeEnum.ACCOUNTS
+
+LOOK_FOR_ROTATIONS = False
+
 SCOPES = ['https://www.googleapis.com/auth/photoslibrary.readonly']
 
-CREDENTIALS_PATH = 'credentials/credentials.json'
-
-IS_DASHBOARD = True
-
-ACCOUNT_NAME = "Photos Backup"
+ACCOUNTS = [Account(name="Photos Backup", credentials='credentials/credentials1/credentials1.json'),
+            Account(name="Elite Gallery", credentials='credentials/credentials2/credentials2.json')]
 
 DASHBOARD = {"app_name": "photos",
              "app_port": 8050,
