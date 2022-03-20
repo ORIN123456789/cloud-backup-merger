@@ -21,10 +21,11 @@ a:visited{
     width: 180px;
     text-align: center;
     border-style: hidden;
+    height: 250px
 }
 
 .image {
-    max-width: 90px;
+    max-width: 150px;
     display: block;
     margin: auto;
     text-align: center;

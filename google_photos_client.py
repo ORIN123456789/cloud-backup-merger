@@ -13,6 +13,8 @@ class GooglePhotosClient:
                 raise InternetException
             self.media_manager = Media(self.google_photos_service)
             self.albums = Album(self.google_photos_service).list()
+            self.media_iterator = self.media_manager.list()
+
 
     def duplicates(self):
         all_the_images = dict()
@@ -37,4 +39,6 @@ class GooglePhotosClient:
                 except ValueError:
                     pass
         return duplicates
+
+
 
