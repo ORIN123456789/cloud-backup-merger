@@ -44,9 +44,21 @@ class GoogleImage:
 
     @hash.setter
     def hash(self, base_url):
+        hashes = []
         hash_function = imagehash.average_hash
         image = self._pil_image(base_url)
-        _hash = str(hash_function(image)) # todo - make it a list
+        hashes.append(str(hash_function(image)))
+        # hashes.append(h1)
+        # image = image.rotate(180)
+        # h2 = str(hash_function(image))
+        # hashes.append(h2)
+        for angle in [90, 180, 270]:
+            image = image.rotate(angle)
+            hashes.append(str(hash_function(image)))
+        hashes.sort()
+        # _hash = h1 if h1 < h2 else h2
+        _hash = hashes[0]
+        #_hash = str(hash_function(image)) # todo - make it a list
         if LOOK_FOR_ROTATIONS:
             _hash += [hash_function(rotation) for rotation in self._rotations(image)]
         self._hash = _hash
