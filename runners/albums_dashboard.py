@@ -28,7 +28,7 @@ class AlbumsDashboard(BasicDashboard):
             photo_list = self.images_list_to_html_object(self.duplicated_photos.values())
             _html = html.Div(children=[html.Img(src=DASHBOARD["logo"], id='logo'),
                                        html.Img(src=DASHBOARD["instruction"], id='instruction'),
-                                       html.Img(src=DASHBOARD["album_text"], classname='message'),
+                                       html.Img(src=DASHBOARD["album_text"], id='message'),
                                        html.Div([photo_list], className='table'),
                                        ]
                              )
