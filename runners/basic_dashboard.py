@@ -11,10 +11,10 @@ class BasicDashboard:
         self.app = Dash(DASHBOARD["app_name"])
         self.port = DASHBOARD["app_port"]
         self.app.title = DASHBOARD["app_name"]
-        self.app.layout = self.serve_layout
 
     def launch(self):
         Timer(1, self._open_browser).start()
+        self.app.layout = self.serve_layout
         self.app.run_server(port=self.port, use_reloader=False)
 
     def refresh_data(self):

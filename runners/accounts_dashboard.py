@@ -1,7 +1,8 @@
-from dash import html, dcc
-import plotly.express as px
-import pandas as pd
+from dash import html
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
 import configurations
+from calculate_duplications import duplicates_between_accounts
 from runners.basic_dashboard import BasicDashboard
 from google_photos_client import GooglePhotosClient
 from configurations import DASHBOARD
@@ -10,15 +11,27 @@ from configurations import DASHBOARD
 class AccountsDashboard(BasicDashboard):
 
     def __init__(self):
+        self.google_photos_clients = self.get_google_photos_clients()
         super().__init__()
-        self.duplicated_photos = self._find_duplicated_photos()
+        self.duplicated_photos = None
 
     def refresh_data(self):
         self.duplicated_photos = self._find_duplicated_photos()
 
+    def get_google_photos_clients(self):
+        create_clients_processes = []
+        _google_photos_clients = []
+        with ThreadPoolExecutor(max_workers=None) as executor:
+            for account in configurations.ACCOUNTS:
+                create_clients_processes.append(executor.submit(GooglePhotosClient, account))
+            for _ in as_completed(create_clients_processes):
+                _google_photos_clients.append(_.result())
+        return _google_photos_clients
+
     def _find_duplicated_photos(self):
-        google_photos_clients = [GooglePhotosClient(account) for account in configurations.ACCOUNTS]
-        return GooglePhotosClient.duplicates_between_accounts(google_photos_clients)
+        #return duplicates_between_accounts(_google_photos_clients)
+        return duplicates_between_accounts(self.get_google_photos_clients())
+        #return duplicates_between_accounts(self.google_photos_clients) -  todo : check why this command doesnt work
 
     def serve_layout(self):
         self.refresh_data()
@@ -31,10 +44,8 @@ class AccountsDashboard(BasicDashboard):
                                        html.Img(src=DASHBOARD["instruction"], id='instruction'),
                                        html.Img(src=DASHBOARD["account_text"], id='message'),
                                        html.Div([photo_list], className='table'),
-                                       ]
-                             )
+                                       ])
         return _html
-
 
     def photo_li(self, album_images):
         base_url = next(iter(album_images)).base_url

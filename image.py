@@ -3,12 +3,18 @@ import imagehash
 import requests
 from io import BytesIO
 from configurations import LOOK_FOR_ROTATIONS
+from exceptions import NotAnImage
+
+
+def create_google_image(google_photo, account_name=None, album_title=None, enrich_image_info=False):
+    if "photo" not in google_photo["mediaMetadata"]:
+        return None
+    return GoogleImage(google_photo, account_name, album_title, enrich_image_info)
 
 
 class GoogleImage:
 
     def __init__(self, google_photo, account_name=None, album_title=None, enrich_image_info=False):
-        self._validate(google_photo)
         self.url = google_photo["productUrl"]
         self.base_url = google_photo["baseUrl"]
         self.hash = google_photo["baseUrl"]
@@ -18,10 +24,6 @@ class GoogleImage:
             self.id_ = google_photo["id"]
             self.filename = google_photo["filename"]
             self.metadata = google_photo["mediaMetadata"]
-
-    def _validate(self, google_photo):
-        if "photo" not in google_photo["mediaMetadata"]:
-            raise ValueError("this item is not a photo")
 
     def _pil_image(self, base_url):
         response = requests.get(base_url)
@@ -54,7 +56,7 @@ class GoogleImage:
         hashes.sort()
         self._hash = hashes[0]
 
-    def rotate(self):
+    def rotate(self, image, angel):
         pass
 
     def __str__(self):

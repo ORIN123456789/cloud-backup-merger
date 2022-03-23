@@ -1,10 +1,11 @@
-photos - 2022-03-23 13:26:59,830 - INFO - Dash is running on http://127.0.0.1:8050/
+photos - 2022-03-23 20:16:23,057 - INFO - Dash is running on http://127.0.0.1:8050/
 
-werkzeug - 2022-03-23 13:26:59,838 - INFO -  * Running on http://127.0.0.1:8050/ (Press CTRL+C to quit)
-werkzeug - 2022-03-23 13:27:14,702 - INFO - 127.0.0.1 - - [23/Mar/2022 13:27:14] "GET / HTTP/1.1" 200 -
-werkzeug - 2022-03-23 13:27:14,724 - INFO - 127.0.0.1 - - [23/Mar/2022 13:27:14] "[36mGET /assets/style.css?m=1648028868.7689474 HTTP/1.1[0m" 304 -
-werkzeug - 2022-03-23 13:27:15,176 - INFO - 127.0.0.1 - - [23/Mar/2022 13:27:15] "GET /_dash-dependencies HTTP/1.1" 200 -
-werkzeug - 2022-03-23 13:27:28,924 - INFO - 127.0.0.1 - - [23/Mar/2022 13:27:28] "GET /_dash-layout HTTP/1.1" 200 -
-werkzeug - 2022-03-23 13:27:29,254 - INFO - 127.0.0.1 - - [23/Mar/2022 13:27:29] "[36mGET /assets/logo.png HTTP/1.1[0m" 304 -
-werkzeug - 2022-03-23 13:27:29,260 - INFO - 127.0.0.1 - - [23/Mar/2022 13:27:29] "GET /_dash-component-suites/dash/dcc/async-graph.js HTTP/1.1" 200 -
-werkzeug - 2022-03-23 13:27:29,284 - INFO - 127.0.0.1 - - [23/Mar/2022 13:27:29] "GET /_dash-component-suites/dash/dcc/async-plotlyjs.js HTTP/1.1" 200 -
+werkzeug - 2022-03-23 20:16:23,057 - INFO -  * Running on http://127.0.0.1:8050/ (Press CTRL+C to quit)
+werkzeug - 2022-03-23 20:16:54,621 - INFO - 127.0.0.1 - - [23/Mar/2022 20:16:54] "GET / HTTP/1.1" 200 -
+werkzeug - 2022-03-23 20:16:54,654 - INFO - 127.0.0.1 - - [23/Mar/2022 20:16:54] "[36mGET /assets/style.css?m=1648039395.8942811 HTTP/1.1[0m" 304 -
+werkzeug - 2022-03-23 20:16:55,060 - INFO - 127.0.0.1 - - [23/Mar/2022 20:16:55] "GET /_dash-dependencies HTTP/1.1" 200 -
+werkzeug - 2022-03-23 20:16:55,085 - INFO - 127.0.0.1 - - [23/Mar/2022 20:16:55] "[36mGET /assets/favicon.ico?m=1648037716.3209276 HTTP/1.1[0m" 304 -
+werkzeug - 2022-03-23 20:16:58,574 - INFO - 127.0.0.1 - - [23/Mar/2022 20:16:58] "GET /_dash-layout HTTP/1.1" 200 -
+werkzeug - 2022-03-23 20:16:58,910 - INFO - 127.0.0.1 - - [23/Mar/2022 20:16:58] "[36mGET /assets/instruction.png HTTP/1.1[0m" 304 -
+werkzeug - 2022-03-23 20:16:58,910 - INFO - 127.0.0.1 - - [23/Mar/2022 20:16:58] "[36mGET /assets/logo.png HTTP/1.1[0m" 304 -
+werkzeug - 2022-03-23 20:16:58,910 - INFO - 127.0.0.1 - - [23/Mar/2022 20:16:58] "[36mGET /assets/account_text.png HTTP/1.1[0m" 304 -

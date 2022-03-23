@@ -1,4 +1,6 @@
 from dash import html
+
+from calculate_duplications import duplicates_between_albums
 from runners.basic_dashboard import BasicDashboard
 from google_photos_client import GooglePhotosClient
 from configurations import DASHBOARD, ACCOUNTS
@@ -14,7 +16,7 @@ class AlbumsDashboard(BasicDashboard):
 
     def _find_duplicated_photos(self):
         google_photos_client = GooglePhotosClient(ACCOUNTS[0])
-        return google_photos_client.duplicates_between_albums()
+        return duplicates_between_albums(google_photos_client)
 
     def serve_layout(self):
         self.refresh_data()
