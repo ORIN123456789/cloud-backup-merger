@@ -24,12 +24,12 @@ class AccountsDashboard(BasicDashboard):
         self.refresh_data()
         if len(self.duplicated_photos) == 0:
             _html = html.Div(children=[html.Img(src=DASHBOARD["logo"], id='logo'),
-                             html.H3('There are no duplicated photos in you accounts', className='text')])
+                                       html.Img(src=DASHBOARD["no_duplicates"], className='message')])
         else:
             photo_list = self.images_list_to_html_object(self.duplicated_photos.values())
             _html = html.Div(children=[html.Img(src=DASHBOARD["logo"], id='logo'),
-                                       html.H4('The following images appear multiple times in your accounts:',
-                                               className='text'),
+                                       html.Img(src=DASHBOARD["instruction"], id='instruction'),
+                                       html.Img(src=DASHBOARD["account_text"], classname='message'),
                                        html.Div([photo_list], className='table'),
                                        ]
                              )

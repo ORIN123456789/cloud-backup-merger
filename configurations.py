@@ -1,7 +1,7 @@
 from common_objects import Account, RunTypeEnum
 
 
-RUN_TYPE = RunTypeEnum.ALBUMS
+RUN_TYPE = RunTypeEnum.ACCOUNTS
 
 LOOK_FOR_ROTATIONS = False
 
@@ -12,4 +12,7 @@ ACCOUNTS = [Account(name="Photos Backup", credentials='credentials/credentials1/
 
 DASHBOARD = {"app_name": "photos",
              "app_port": 8050,
-             "logo": "assets/logo.png"}
+             "logo": "assets/logo.png",
+             "instruction": "assets/instruction.png",
+             "account_text": "assets/account_text.png",
+             "album_text": "assets/album_text.png"}
