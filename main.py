@@ -3,6 +3,7 @@ from runners.runners_factory import RunnersFactory
 from exceptions import InternetException
 import traceback
 
+
 def main():
     try:
         runner = RunnersFactory(configurations.RUN_TYPE)

@@ -1,7 +1,4 @@
-from dash import html, dcc
-import plotly.express as px
-import pandas as pd
-from threading import Timer
+from dash import html
 from runners.basic_dashboard import BasicDashboard
 from google_photos_client import GooglePhotosClient
 from configurations import DASHBOARD, ACCOUNTS
@@ -34,7 +31,7 @@ class AlbumsDashboard(BasicDashboard):
                              )
         return _html
 
-    def photo_li(self, album_images):
+    def photo_list(self, album_images):
         base_url = next(iter(album_images)).base_url
         link_li = lambda img: html.Li(html.A("Album " + img.album_title,
                                              className='album',
@@ -43,13 +40,13 @@ class AlbumsDashboard(BasicDashboard):
                                       className='list')
         links = html.Ul(children=[link_li(img) for img in album_images])
 
-        li = html.Li(children=[html.Img(src=base_url,
+        photos_list = html.Li(children=[html.Img(src=base_url,
                                         className='image'),
                                links],
                      className='photo_li')
-        return li
+        return photos_list
 
     def images_list_to_html_object(self, photos):
         photo_list = html.Ul(className='duplicated_photos',
-                             children=[self.photo_li(image) for image in photos])
+                             children=[self.photo_list(image) for image in photos])
         return photo_list

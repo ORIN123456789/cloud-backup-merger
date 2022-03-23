@@ -15,4 +15,5 @@ DASHBOARD = {"app_name": "photos",
              "logo": "assets/logo.png",
              "instruction": "assets/instruction.png",
              "account_text": "assets/account_text.png",
-             "album_text": "assets/album_text.png"}
+             "album_text": "assets/album_text.png",
+             "no_duplicates": "assets/no_duplicates.png"}
