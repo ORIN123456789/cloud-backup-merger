@@ -1,7 +1,7 @@
 from common_objects import Account, RunTypeEnum
 
 
-RUN_TYPE = RunTypeEnum.ACCOUNTS
+RUN_TYPE = RunTypeEnum.ALBUMS
 
 LOOK_FOR_ROTATIONS = False
 

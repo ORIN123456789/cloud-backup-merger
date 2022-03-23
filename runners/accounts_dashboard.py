@@ -28,8 +28,6 @@ class AccountsDashboard(BasicDashboard):
         else:
             photo_list = self.images_list_to_html_object(self.duplicated_photos.values())
             _html = html.Div(children=[html.Img(src=DASHBOARD["logo"], id='logo'),
-                                       dcc.Graph(id='occurrences-graph',
-                                                 figure=self._figure()),
                                        html.H4('The following images appear multiple times in your accounts:',
                                                className='text'),
                                        html.Div([photo_list], className='table'),
@@ -37,15 +35,6 @@ class AccountsDashboard(BasicDashboard):
                              )
         return _html
 
-    def _figure(self):
-        return px.bar(self._dataframe(), x="Photo", y="Occurrences")
-
-    def _dataframe(self):
-        photos_hash = self.duplicated_photos.keys()
-        occurrences = [len(self.duplicated_photos[photo_hash]) for photo_hash in photos_hash]
-        df = pd.DataFrame({"Photo": photos_hash,
-                           "Occurrences": occurrences})
-        return df
 
     def photo_li(self, album_images):
         base_url = next(iter(album_images)).base_url
