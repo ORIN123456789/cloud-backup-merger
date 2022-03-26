@@ -49,12 +49,11 @@ class AccountsDashboard(BasicDashboard):
 
     def photo_li(self, album_images):
         base_url = next(iter(album_images)).base_url
-        link_li = lambda img: html.Li(html.A(img.account_name,
+        link_li = lambda img: html.A(img.account_name,
                                              className='account',
                                              href=img.url,
-                                             target="_blank"),
-                                      className='list')
-        links = html.Ul(children=[link_li(img) for img in album_images])
+                                             target="_blank")
+        links = html.Div(children=[link_li(img) for img in album_images], className="links")
 
         li = html.Li(children=[html.Img(src=base_url,
                                         className='image'),

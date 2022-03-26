@@ -24,6 +24,17 @@
     margin-right: auto;
 }
 
+.links{
+    overflow-y: auto;
+    height: 80px;
+    width: 161px;
+    position: absolute;
+    bottom: 10px;
+}
+
+.links a{
+    display: block;
+}
 
 a:visited{
   color:black;
@@ -31,17 +42,20 @@ a:visited{
 
 
 .photo_li {
+    /*float: left;*/
+    overflow: hidden;
     float: left;
     width: 180px;
-    text-align: center;
-    border-style: hidden;
-    height: 250px
+    height: 250px;
+    /*border: 1px solid black;*/
+    position: relative;
 }
 
-.list {
+/*.list {
     text-align: center;
     list-style-type:none;}
 }
+*/
 
 .table{
     display: table;
@@ -55,10 +69,10 @@ a:visited{
 a:link, a:visited {
   background-color: white;
   color: black;
+  padding: 3px 20px;
   border: 2px solid green;
-  padding: 10px 20px;
-  display:block;
-  text-align: center;
+  /*display:block;
+  text-align: center;*/
   text-decoration: none;
   width:100px;
   height:20px;
@@ -73,8 +87,9 @@ a:hover, a:active {
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 5px;
-  width: 150px;
-  display: block;
+  max-width: 150px;
+  max-height: 150px;
+  /*display: block;
   margin-left: auto;
-  margin-right: auto;
+  margin-right: auto;*/
 }
