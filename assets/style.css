@@ -27,7 +27,7 @@
 .links{
     overflow-y: auto;
     height: 80px;
-    width: 161px;
+    width: 165px;
     position: absolute;
     bottom: 10px;
 }
@@ -69,12 +69,12 @@ a:visited{
 a:link, a:visited {
   background-color: white;
   color: black;
-  padding: 3px 20px;
+  /*padding: 3px 25px;*/
+  overflow: hidden;
   border: 2px solid green;
   /*display:block;
   text-align: center;*/
   text-decoration: none;
-  width:100px;
   height:20px;
 }
 

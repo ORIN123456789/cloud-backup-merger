@@ -14,6 +14,7 @@ class AccountsDashboard(BasicDashboard):
         self.google_photos_clients = self.get_google_photos_clients()
         super().__init__()
         self.duplicated_photos = None
+        self.accounts_counter = dict()
 
     def refresh_data(self):
         self.duplicated_photos = self._find_duplicated_photos()
@@ -47,9 +48,17 @@ class AccountsDashboard(BasicDashboard):
                                        ])
         return _html
 
+    def get_account_counter(self, account_name):
+        counter = self.accounts_counter.get(account_name, 0) + 1
+        self.accounts_counter[account_name] = counter
+        str_counter = str(counter) if counter > 1 else ""
+        return account_name + " " + str_counter
+
+
     def photo_li(self, album_images):
+        self.accounts_counter.clear()
         base_url = next(iter(album_images)).base_url
-        link_li = lambda img: html.A(img.account_name,
+        link_li = lambda img: html.A(self.get_account_counter(img.account_name),
                                              className='account',
                                              href=img.url,
                                              target="_blank")
