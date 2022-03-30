@@ -7,8 +7,8 @@ LOOK_FOR_ROTATIONS = False
 
 SCOPES = ['https://www.googleapis.com/auth/photoslibrary.readonly']
 
-ACCOUNTS = [Account(name="Photos Backup", credentials='credentials/credentials1/credentials1.json'),
-            Account(name="Elite Gallery", credentials='credentials/credentials2/credentials2.json')]
+ACCOUNTS = [Account(name="Alice's Cats", credentials='credentials/credentials1/credentials1.json'),
+            Account(name="Alice's trips", credentials='credentials/credentials2/credentials2.json')]
 
 DASHBOARD = {"app_name": "photos",
              "app_port": 8050,
